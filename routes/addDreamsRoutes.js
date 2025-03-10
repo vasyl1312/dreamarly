@@ -5,7 +5,7 @@ const router = new Router();
 
 router.get("/", async (req, res) => {
   try {
-    return res.render("add_new_dreams");
+    return res.render("addNewDreams");
   } catch (error) {
     console.error(error);
     return res.status(500).send("Internal Server Error");
