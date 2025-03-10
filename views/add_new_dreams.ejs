@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Додати сон</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <h1>Додати новий сон</h1>
+    <form action="/add_new_dreams" method="POST">
+      <label for="title">Назва сну:</label>
+      <input type="text" id="title" name="title" required />
+
+      <label for="description">Опис:</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <label for="categories">Категорії:</label>
+      <select id="categories" name="categories" multiple required>
+        <option value="кошмари">Кошмари</option>
+        <option value="осознані сновидіння">Осознані сновидіння</option>
+        <option value="фантастика">Фантастика</option>
+        <option value="реалістичні">Реалістичні</option>
+        <option value="повторювані">Повторювані</option>
+      </select>
+      <p>Затисніть Ctrl (Cmd на Mac), щоб вибрати кілька категорій</p>
+
+      <button type="submit">Зберегти</button>
+    </form>
+  </body>
+</html>

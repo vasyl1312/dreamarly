@@ -5,16 +5,14 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const homeRoutes = require("./routes/homeRoutes");
-// const loginRoutes = require("./routes/loginRoutes");
-// const adminRoutes = require("./routes/adminRoutes");
-// const logoutRoutes = require("./routes/logoutRoutes");
+const addDreamsRoutes = require("./routes/addDreamsRoutes");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/views"));
-app.use("/views/image", express.static(__dirname + "/views/image"));
+// app.use("/views/image", express.static(__dirname + "/views/image"));
 app.use(
   "/views/css",
   (req, res, next) => {
@@ -34,20 +32,18 @@ app.use(
 app.engine("ejs", require("ejs").renderFile);
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(
-  session({
-    secret: `${process.env.USERNAME}`,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+// app.use(
+//   session({
+//     secret: `${process.env.USERNAME}`,
+//     resave: false,
+//     saveUninitialized: true,
+//   })
+// );
 
 // app.use(fileMiddleware.single("avatar"));
 
 app.use("/", homeRoutes);
-// app.use("/deshychi_vhid", loginRoutes);
-// app.use("/deshychi_vyhid", logoutRoutes);
-// app.use("/deshychi_admin", adminRoutes);
+app.use("/add_new_dreams", addDreamsRoutes);
 
 const start = async () => {
   try {

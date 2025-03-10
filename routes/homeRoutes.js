@@ -19,10 +19,10 @@ router.get("/", async (req, res) => {
     // }
 
     // res.render("index", { contact, aboutUs, gallery });
-    res.render("index");
+    return res.render("index");
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    return res.status(500).send("Internal Server Error");
   }
 });
 
