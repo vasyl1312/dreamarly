@@ -3,29 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Додати сон</title>
+    <title>Add new dream</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <h1>Додати новий сон</h1>
+    <h1>Add new dream</h1>
     <form action="/add_new_dreams" method="POST">
-      <label for="title">Назва сну:</label>
+      <label for="title">Name of the dream:</label>
       <input type="text" id="title" name="title" required />
 
-      <label for="description">Опис:</label>
+      <label for="description">Description:</label>
       <textarea id="description" name="description" required></textarea>
 
-      <label for="categories">Категорії:</label>
+      <label for="categories">Categories:</label>
       <select id="categories" name="categories" multiple required>
-        <option value="кошмари">Кошмари</option>
-        <option value="осознані сновидіння">Осознані сновидіння</option>
-        <option value="фантастика">Фантастика</option>
-        <option value="реалістичні">Реалістичні</option>
-        <option value="повторювані">Повторювані</option>
+        <option value="horrors">Horrors</option>
+        <option value="love_stories">Love Stories</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="realistic">Realistic</option>
+        <option value="adventure">Adventure</option>
+        <option value="else">Else</option>
       </select>
-      <p>Затисніть Ctrl (Cmd на Mac), щоб вибрати кілька категорій</p>
+      <p>Hold down Ctrl (Cmd on Mac) to select multiple categories</p>
 
-      <button type="submit">Зберегти</button>
+      <button type="submit">Save</button>
     </form>
+    <a href="/add_new_dreams">Add newdreams</a>
+    <a href="/all_dreams"> All dreams</a>
   </body>
 </html>

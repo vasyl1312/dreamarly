@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
 
     await newDream.save();
 
-    return res.redirect("/");
+    return res.redirect("/all_dreams");
   } catch (error) {
     console.error(error);
     return res.status(500).send("Internal Server Error");

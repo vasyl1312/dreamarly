@@ -7,23 +7,22 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <h1>Список снів</h1>
+    <h1>List of dreams</h1>
 
     <% if (dreams.length === 0) { %>
-    <p>Поки що немає жодного сну.</p>
+    <p>There are no dream yes</p>
     <% } else { %>
     <ul>
       <% dreams.forEach(dream => { %>
       <li>
-        <h2><%= dream.title %></h2>
-        <p><strong>Опис:</strong> <%= dream.description %></p>
-        <p><strong>Категорії:</strong> <%= dream.categories.join(', ') %></p>
-        <p><strong>Дата:</strong> <%= dream.date ? dream.date.toDateString() : "Невідома" %></p>
+        <h2><a href="/dream/<%= dream._id %>"><%= dream.title %></a></h2>
+        <p><strong>Categories:</strong> <%= dream.categories.join(', ') %></p>
+        <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
       </li>
       <% }) %>
     </ul>
     <% } %>
 
-    <a href="/add_new_dreams">Додати новий сон</a>
+    <a href="/add_new_dreams">Add new dream</a>
   </body>
 </html>

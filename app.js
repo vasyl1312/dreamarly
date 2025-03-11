@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const homeRoutes = require("./routes/homeRoutes");
+const dreamRoutes = require("./routes/dreamRoutes");
 const allDreamsRoutes = require("./routes/allDreamsRoutes");
 const addDreamsRoutes = require("./routes/addDreamsRoutes");
 
@@ -44,6 +45,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(fileMiddleware.single("avatar"));
 
 app.use("/", homeRoutes);
+app.use("/dream", dreamRoutes);
 app.use("/all_dreams", allDreamsRoutes);
 app.use("/add_new_dreams", addDreamsRoutes);
 

@@ -18,6 +18,25 @@ const dreamSchema = new Schema({
 
   date: Date,
 
+  reactions: {
+    very_cool: { type: Number, default: 0 },
+    pleasant: { type: Number, default: 0 },
+    funny: { type: Number, default: 0 },
+    mind_blown: { type: Number, default: 0 },
+    weird: { type: Number, default: 0 },
+    dislike: { type: Number, default: 0 },
+  },
+
+  // const reactionEmojis = {
+  //   "very_cool": "😍",
+  //   "pleasant": "😊",
+  //   "funny": "😆",
+  //   "mind_blown": "🤯",
+  //   "weird": "🤔",
+  //   "dislike": "👎"
+  // };
+  
+
   // author: {
 
   // img: String,

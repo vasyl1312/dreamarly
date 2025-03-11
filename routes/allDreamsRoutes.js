@@ -4,7 +4,7 @@ const Dream = require("../models/dreams");
 
 router.get("/", async (req, res) => {
   try {
-    const dreams = await Dream.find();
+    const dreams = await Dream.find().sort({ date: -1 });
     return res.render("allDreams", { dreams });
   } catch (error) {
     console.error(error);

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= dream.title %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <h1><%= dream.title %></h1>
+    <p><strong>Description:</strong> <%= dream.description %></p>
+    <p><strong>Categories:</strong> <%= dream.categories.join(', ') %></p>
+    <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
+
+    <form action="/dream/<%= dream._id %>/delete" method="POST">
+      <button
+        type="submit"
+        style="background-color: red; color: white; border: none; padding: 10px; cursor: pointer"
+      >
+        🗑️ Delete your dream
+      </button>
+    </form>
+
+    <a href="/all_dreams">⬅ Back to all dreams</a>
+    <a href="/add_new_dreams">Add new dream</a>
+  </body>
+</html>
