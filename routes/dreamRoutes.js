@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Dream = require("../models/dreams");
+// const isAuthenticated = require("../middleware/isAuthenticated");
 
 router.get("/:id", async (req, res) => {
   try {
@@ -17,7 +18,9 @@ router.get("/:id", async (req, res) => {
 
 router.post("/:id/delete", async (req, res) => {
   try {
-    await Dream.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+
+    await Dream.findByIdAndDelete(id);
     return res.redirect("/all_dreams");
   } catch (error) {
     console.error(error);

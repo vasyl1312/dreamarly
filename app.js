@@ -2,9 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const mongoose = require("mongoose");
+const passport = require("passport");
 require("dotenv").config();
 
 const homeRoutes = require("./routes/homeRoutes");
+const authRoutes = require("./routes/authRoutes");
 const dreamRoutes = require("./routes/dreamRoutes");
 const allDreamsRoutes = require("./routes/allDreamsRoutes");
 const addDreamsRoutes = require("./routes/addDreamsRoutes");
@@ -34,17 +36,20 @@ app.use(
 app.engine("ejs", require("ejs").renderFile);
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(
-//   session({
-//     secret: `${process.env.USERNAME}`,
-//     resave: false,
-//     saveUninitialized: true,
-//   })
-// );
+app.use(
+  session({
+    secret: `${process.env.USERNAME}`,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
-// app.use(fileMiddleware.single("avatar"));
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/", homeRoutes);
+app.use("/auth", authRoutes);
 app.use("/dream", dreamRoutes);
 app.use("/all_dreams", allDreamsRoutes);
 app.use("/add_new_dreams", addDreamsRoutes);

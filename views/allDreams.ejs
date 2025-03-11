@@ -10,7 +10,7 @@
     <h1>List of dreams</h1>
 
     <% if (dreams.length === 0) { %>
-    <p>There are no dream yes</p>
+    <p>There are no dream yet</p>
     <% } else { %>
     <ul>
       <% dreams.forEach(dream => { %>
@@ -24,5 +24,8 @@
     <% } %>
 
     <a href="/add_new_dreams">Add new dream</a>
+    <a href="/auth/login">Login</a>
+    <a href="/auth/register"> Register</a>
+    <a href="/auth/logout">Logout</a>
   </body>
 </html>

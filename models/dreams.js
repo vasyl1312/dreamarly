@@ -35,7 +35,6 @@ const dreamSchema = new Schema({
   //   "weird": "🤔",
   //   "dislike": "👎"
   // };
-  
 
   // author: {
 
@@ -46,4 +45,4 @@ const dreamSchema = new Schema({
   // },
 });
 
-module.exports = model("dream", dreamSchema);
+module.exports = model("Dream", dreamSchema);
