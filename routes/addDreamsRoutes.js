@@ -19,10 +19,10 @@ router.post("/", async (req, res) => {
       description: req.body.description,
       categories: req.body.categories,
       date: new Date(),
+      author: req.session.user ? req.session.user._id : null,
     });
 
     await newDream.save();
-
     return res.redirect("/all_dreams");
   } catch (error) {
     console.error(error);

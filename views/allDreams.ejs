@@ -18,6 +18,12 @@
         <h2><a href="/dream/<%= dream._id %>"><%= dream.title %></a></h2>
         <p><strong>Categories:</strong> <%= dream.categories.join(', ') %></p>
         <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
+        <p>
+          <strong>Author:</strong>
+          <% if (dream.author) { %>
+          <a href="/user/<%= dream.author %>">View Profile</a>
+          <% } else { %> Anonymous <% } %>
+        </p>
       </li>
       <% }) %>
     </ul>

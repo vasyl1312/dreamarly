@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const bcrypt = require("bcryptjs");
 const User = require("../models/users");
+const isAuthenticated = require("../middleware/isAuthenticated");
 const router = new Router();
 
 let alert = { type: "", message: "" };
@@ -76,8 +77,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// router.get("/logout", (req, res) => {
-//   req.logout(() => res.redirect("/"));
-// });
+router.get("/logout", async (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/");
+  });
+});
 
 module.exports = router;

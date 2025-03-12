@@ -16,7 +16,16 @@ const dreamSchema = new Schema({
     required: true,
   },
 
-  date: Date,
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    default: null,
+  },
 
   reactions: {
     very_cool: { type: Number, default: 0 },
@@ -26,23 +35,6 @@ const dreamSchema = new Schema({
     weird: { type: Number, default: 0 },
     dislike: { type: Number, default: 0 },
   },
-
-  // const reactionEmojis = {
-  //   "very_cool": "😍",
-  //   "pleasant": "😊",
-  //   "funny": "😆",
-  //   "mind_blown": "🤯",
-  //   "weird": "🤔",
-  //   "dislike": "👎"
-  // };
-
-  // author: {
-
-  // img: String,
-  // userId: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User', //взаємодія між продуктом та користувачем
-  // },
 });
 
 module.exports = model("Dream", dreamSchema);
