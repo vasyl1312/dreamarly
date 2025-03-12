@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites List</title>
+    <%- include("header") %>
+  </head>
+  <body>
+    <h1>Your Favorite Dreams</h1>
+
+    <% if (favorites.length > 0) { %> <% favorites.forEach(dream => { %>
+    <div>
+      <h2><a href="/dream/<%= dream._id %>"><%= dream.title %></a></h2>
+      <p><%= dream.description %></p>
+      <form action="/favorites/remove/<%= dream._id %>" method="POST">
+        <button type="submit">Remove from Favorites</button>
+      </form>
+    </div>
+    <hr />
+    <% }) %> <% } else { %>
+    <p>No favorite dreams yet.</p>
+    <% } %>
+
+    <a href="/profile">Back to Profile</a>
+  </body>
+</html>

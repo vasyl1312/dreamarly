@@ -13,11 +13,18 @@
     <p><strong>Categories:</strong> <%= dream.categories.join(', ') %></p>
     <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
 
+    <% if (user && dream.author && dream.author.toString() === user._id.toString()) { %>
+    <p><strong>This is your dream.</strong> <a href="/my_dreams">View all your dreams</a></p>
+    <% } else if (user) { %>
     <p>
       <strong>Author:</strong>
       <% if (dream.author) { %>
       <a href="/author/<%= dream.author %>">View Profile</a>
       <% } else { %> Anonymous <% } %>
     </p>
+    <form action="/favorites/add/<%= dream._id %>" method="POST">
+      <button type="submit">❤️ Add to Favorites</button>
+    </form>
+    <% } %>
   </body>
 </html>

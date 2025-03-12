@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const User = require("../models/users");
 const Dream = require("../models/dreams");
 const { isAuthenticated } = require("../middleware/auth");
 
@@ -55,6 +56,20 @@ router.post("/edit_dream/:id", isAuthenticated, async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/favorites", async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.redirect("/login");
+    }
+
+    const user = await User.findById(req.session.user._id).populate("favorites");
+    res.render("favorites", { favorites: user.favorites });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 });
 

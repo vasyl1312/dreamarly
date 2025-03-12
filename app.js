@@ -10,6 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const dreamRoutes = require("./routes/dreamRoutes");
 const authorRoutes = require("./routes/authorRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const favoriteRoutes = require("./routes/favoriteRoutes");
 const allDreamsRoutes = require("./routes/allDreamsRoutes");
 const addDreamsRoutes = require("./routes/addDreamsRoutes");
 
@@ -43,6 +44,7 @@ app.use("/auth", authRoutes);
 app.use("/dream", dreamRoutes);
 app.use("/author", authorRoutes);
 app.use("/profile", profileRoutes);
+app.use("/favorites", favoriteRoutes);
 app.use("/all_dreams", allDreamsRoutes);
 app.use("/add_new_dreams", addDreamsRoutes);
 
