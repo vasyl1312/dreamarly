@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Header</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/all_dreams">All Dreams</a></li>
+
+        <% if (user) { %>
+        <li><a href="/auth/logout">Log Out</a></li>
+        <% } else { %>
+        <li><a href="/auth/login">Log In</a></li>
+        <li><a href="/auth/register">Register</a></li>
+        <% } %>
+      </ul>
+    </nav>
+  </body>
+</html>

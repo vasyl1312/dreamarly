@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= dream.title %></title>
     <link rel="stylesheet" href="/styles.css" />
+    <%- include("header") %>
   </head>
   <body>
     <h1><%= dream.title %></h1>
@@ -21,7 +22,6 @@
       </button>
     </form>
 
-    <a href="/all_dreams">⬅ Back to all dreams</a>
     <a href="/add_new_dreams">Add new dream</a>
   </body>
 </html>

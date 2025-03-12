@@ -16,23 +16,7 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/views"));
-// app.use("/views/image", express.static(__dirname + "/views/image"));
-app.use(
-  "/views/css",
-  (req, res, next) => {
-    res.type("text/css");
-    next();
-  },
-  express.static(__dirname + "/views/css")
-);
-app.use(
-  "/views/js",
-  (req, res, next) => {
-    res.type("application/javascript");
-    next();
-  },
-  express.static(__dirname + "/views/js")
-);
+
 app.engine("ejs", require("ejs").renderFile);
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -43,6 +27,10 @@ app.use(
     saveUninitialized: true,
   })
 );
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
