@@ -14,7 +14,10 @@
     <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
 
     <% if (user && dream.author && dream.author.toString() === user._id.toString()) { %>
-    <p><strong>This is your dream.</strong> <a href="/my_dreams">View all your dreams</a></p>
+    <p>
+      <strong>This is your dream.</strong>
+      <a href="/profile">View all your dreams on your profile</a>
+    </p>
     <% } else if (user) { %>
     <p>
       <strong>Author:</strong>
