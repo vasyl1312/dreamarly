@@ -15,6 +15,9 @@
       <% if (dreams.length > 0) { %> <% dreams.forEach(dream => { %>
       <li>
         <a href="/dream/<%= dream._id %>"><%= dream.title %></a>
+        <button>
+          <a href="/profile/edit_dream/<%= dream._id %>">Edit</a>
+        </button>
         <form action="/profile/delete/<%= dream._id %>" method="POST" style="display: inline">
           <button type="submit">Delete</button>
         </form>
