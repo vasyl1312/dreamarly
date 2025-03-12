@@ -43,15 +43,4 @@ npm start
 - **Backend:** Node.js, Express  
 - **Frontend:** EJS, CSS  
 - **Database:** MongoDB + Mongoose  
-- **Аутентифікація:** Passport.js (у майбутньому)  
-
-## Маршрути API  
-
-| Метод  | Шлях                | Опис |
-|--------|--------------------|------|
-| GET    | `/dreams`          | Отримати всі сни |
-| GET    | `/dreams/:id`      | Отримати один сон |
-| POST   | `/dreams/add`      | Додати новий сон |
-| POST   | `/dreams/:id/react` | Додати реакцію на сон |
-| GET    | `/categories/:name` | Отримати сни за категорією |
 
