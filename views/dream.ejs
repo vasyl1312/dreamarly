@@ -13,6 +13,13 @@
     <p><strong>Categories:</strong> <%= dream.categories.join(', ') %></p>
     <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
 
+    <p>
+      <strong>Author:</strong>
+      <% if (dream.author) { %>
+      <a href="/author/<%= dream.author %>">View Profile</a>
+      <% } else { %> Anonymous <% } %>
+    </p>
+
     <form action="/dream/<%= dream._id %>/delete" method="POST">
       <button
         type="submit"
@@ -21,7 +28,5 @@
         🗑️ Delete your dream
       </button>
     </form>
-
-    <a href="/add_new_dreams">Add new dream</a>
   </body>
 </html>

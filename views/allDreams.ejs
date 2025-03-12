@@ -22,7 +22,7 @@
         <p>
           <strong>Author:</strong>
           <% if (dream.author) { %>
-          <a href="/user/<%= dream.author %>">View Profile</a>
+          <a href="/author/<%= dream.author %>">View Profile</a>
           <% } else { %> Anonymous <% } %>
         </p>
       </li>
@@ -30,6 +30,5 @@
     </ul>
     <% } %>
 
-    <a href="/add_new_dreams">Add new dream</a>
   </body>
 </html>

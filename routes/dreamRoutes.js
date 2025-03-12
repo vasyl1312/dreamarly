@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Dream = require("../models/dreams");
-// const isAuthenticated = require("../middleware/isAuthenticated");
 
 router.get("/:id", async (req, res) => {
   try {

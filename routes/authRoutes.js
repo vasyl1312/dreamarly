@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const bcrypt = require("bcryptjs");
 const User = require("../models/users");
-const isAuthenticated = require("../middleware/isAuthenticated");
 const router = new Router();
 
 let alert = { type: "", message: "" };
