@@ -65,8 +65,6 @@ router.post("/login", async (req, res) => {
     req.session.isAuthenticated = true;
     await req.session.save();
 
-    alert.type = "info";
-    alert.message = "You are now authenticated";
     return res.redirect("/");
   } catch (err) {
     console.error(err);

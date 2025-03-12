@@ -19,14 +19,5 @@
       <a href="/author/<%= dream.author %>">View Profile</a>
       <% } else { %> Anonymous <% } %>
     </p>
-
-    <form action="/dream/<%= dream._id %>/delete" method="POST">
-      <button
-        type="submit"
-        style="background-color: red; color: white; border: none; padding: 10px; cursor: pointer"
-      >
-        🗑️ Delete your dream
-      </button>
-    </form>
   </body>
 </html>

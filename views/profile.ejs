@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <%- include("header") %>
+  </head>
+  <body>
+    <h1>Welcome, <%= user.username %>!</h1>
+    <p><strong>Email:</strong> <%= user.email %></p>
+
+    <h2>Your Dreams</h2>
+    <ul>
+      <% if (dreams.length > 0) { %> <% dreams.forEach(dream => { %>
+      <li>
+        <a href="/dream/<%= dream._id %>"><%= dream.title %></a>
+        <form action="/profile/delete/<%= dream._id %>" method="POST" style="display: inline">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+      <% }) %> <% } else { %>
+      <p>You haven't posted any dreams yet.</p>
+      <% } %>
+    </ul>
+  </body>
+</html>

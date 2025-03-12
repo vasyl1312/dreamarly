@@ -7,8 +7,9 @@ require("dotenv").config();
 
 const homeRoutes = require("./routes/homeRoutes");
 const authRoutes = require("./routes/authRoutes");
-const authorRoutes = require("./routes/authorRoutes");
 const dreamRoutes = require("./routes/dreamRoutes");
+const authorRoutes = require("./routes/authorRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 const allDreamsRoutes = require("./routes/allDreamsRoutes");
 const addDreamsRoutes = require("./routes/addDreamsRoutes");
 
@@ -39,8 +40,9 @@ app.use(passport.session());
 
 app.use("/", homeRoutes);
 app.use("/auth", authRoutes);
-app.use("/author", authorRoutes);
 app.use("/dream", dreamRoutes);
+app.use("/author", authorRoutes);
+app.use("/profile", profileRoutes);
 app.use("/all_dreams", allDreamsRoutes);
 app.use("/add_new_dreams", addDreamsRoutes);
 

@@ -15,16 +15,4 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/:id/delete", async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    await Dream.findByIdAndDelete(id);
-    return res.redirect("/all_dreams");
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send("Internal Server Error");
-  }
-});
-
 module.exports = router;
