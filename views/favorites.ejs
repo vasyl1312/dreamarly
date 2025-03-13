@@ -17,6 +17,13 @@
         <button type="submit">Remove from Favorites</button>
       </form>
     </div>
+
+    <p><strong>Reactions:</strong></p>
+    <p>
+      🔥 <%= dream.reactions.very_cool %> 😊 <%= dream.reactions.pleasant %> 😂 <%=
+      dream.reactions.funny %> 🤯 <%= dream.reactions.mind_blown %> 😳 <%= dream.reactions.weird %>
+      👎 <%= dream.reactions.dislike %>
+    </p>
     <hr />
     <% }) %> <% } else { %>
     <p>No favorite dreams yet.</p>

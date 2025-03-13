@@ -17,6 +17,14 @@
       <li>
         <a href="/dream/<%= dream._id %>"><%= dream.title %></a>
       </li>
+
+      <p><strong>Reactions:</strong></p>
+      <p>
+        🔥 <%= dream.reactions.very_cool %> 😊 <%= dream.reactions.pleasant %> 😂 <%=
+        dream.reactions.funny %> 🤯 <%= dream.reactions.mind_blown %> 😳 <%= dream.reactions.weird
+        %> 👎 <%= dream.reactions.dislike %>
+      </p>
+      <hr />
       <% }) %> <% } else { %>
       <p>This author hasn't posted any dreams yet.</p>
       <% } %>
