@@ -17,7 +17,12 @@
       <% dreams.forEach(dream => { %>
       <li>
         <h2><a href="/dream/<%= dream._id %>"><%= dream.title %></a></h2>
-        <p><strong>Categories:</strong> <%= dream.categories.join(', ') %></p>
+        <p>
+          <strong>Categories:</strong>
+          <% dream.categories.forEach(category => { %>
+          <a href="/genres/<%= category %>"><%= category %></a><%=
+          (dream.categories.indexOf(category) < dream.categories.length - 1) ? ', ' : '' %> <% }) %>
+        </p>
         <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
         <p>
           <strong>Author:</strong>

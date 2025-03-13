@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreams in <%= category %></title>
+    <link rel="stylesheet" href="/styles.css">
+    <%- include("header") %>
+</head>
+<body>
+    <h1>Dreams in "<%= category %>"</h1>
+
+    <% if (dreams.length === 0) { %>
+      <p>No dreams in this category yet.</p>
+    <% } else { %>
+      <ul>
+        <% dreams.forEach(dream => { %>
+          <li>
+            <h2><a href="/dream/<%= dream._id %>"><%= dream.title %></a></h2>
+            <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
+            <p><strong>Reactions:</strong> 🔥 <%= dream.reactions.very_cool %> 😊 <%= dream.reactions.pleasant %> 😂 <%= dream.reactions.funny %> 🤯 <%= dream.reactions.mind_blown %> 😳 <%= dream.reactions.weird %> 👎 <%= dream.reactions.dislike %></p>
+          </li>
+          <hr />
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <a href="/all_dreams">Back to all dreams</a>
+</body>
+</html>

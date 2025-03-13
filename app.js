@@ -8,6 +8,7 @@ require("dotenv").config();
 const homeRoutes = require("./routes/homeRoutes");
 const authRoutes = require("./routes/authRoutes");
 const dreamRoutes = require("./routes/dreamRoutes");
+const genresRoutes = require("./routes/genresRoutes");
 const authorRoutes = require("./routes/authorRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const favoriteRoutes = require("./routes/favoriteRoutes");
@@ -19,6 +20,7 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/views"));
+app.use(express.static("public"));
 
 app.engine("ejs", require("ejs").renderFile);
 app.set("view engine", "ejs");
@@ -43,6 +45,7 @@ app.use("/", homeRoutes);
 app.use("/auth", authRoutes);
 app.use("/dream", dreamRoutes);
 app.use("/author", authorRoutes);
+app.use("/genres", genresRoutes);
 app.use("/profile", profileRoutes);
 app.use("/favorites", favoriteRoutes);
 app.use("/all_dreams", allDreamsRoutes);

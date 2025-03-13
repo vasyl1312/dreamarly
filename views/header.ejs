@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Header</title>
+    <link rel="stylesheet" href="/css/header.css" />
   </head>
   <body>
     <nav>
@@ -12,11 +13,21 @@
         <li><a href="/all_dreams">All Dreams</a></li>
         <li><a href="/add_new_dreams">Add New Dream</a></li>
 
+        <li class="dropdown">
+          <a href="#">Genres ▼</a>
+          <div class="dropdown-content">
+            <a href="/genres/horrors">Horrors</a>
+            <a href="/genres/love_stories">Love Stories</a>
+            <a href="/genres/fantasy">Fantasy</a>
+            <a href="/genres/realistic">Realistic</a>
+            <a href="/genres/adventure">Adventure</a>
+            <a href="/genres/else">Else</a>
+          </div>
+        </li>
+
         <% if (user) { %>
         <li><a href="/profile">Profile</a></li>
         <li><a href="/profile/favorites">Favorites</a></li>
-        <!-- <li><a href="/profile/edit">Edit Profile</a></li>
-        <li><a href="/profile/delete">Delete Account</a></li> -->
         <li><a href="/auth/logout">Log Out</a></li>
         <% } else { %>
         <li><a href="/auth/login">Log In</a></li>

@@ -10,7 +10,11 @@
   <body>
     <h1><%= dream.title %></h1>
     <p><strong>Description:</strong> <%= dream.description %></p>
-    <p><strong>Categories:</strong> <%= dream.categories.join(', ') %></p>
+    <p><strong>Categories:</strong> 
+        <% dream.categories.forEach(category => { %>
+          <a href="/genres/<%= category %>"><%= category %></a><%= (dream.categories.indexOf(category) < dream.categories.length - 1) ? ', ' : '' %>
+        <% }) %>
+      </p>
     <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
 
     <% if (user && dream.author && dream.author.toString() === user._id.toString()) { %>
