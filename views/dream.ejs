@@ -15,19 +15,56 @@
 
     <% if (user && dream.author && dream.author.toString() === user._id.toString()) { %>
     <p>
-      <strong>This is your dream.</strong>
-      <a href="/profile">View all your dreams on your profile</a>
+        <strong>This is your dream.</strong>
+        <a href="/profile">View all your dreams on your profile</a>
     </p>
-    <% } else if (user) { %>
+    <% } else { %>
     <p>
-      <strong>Author:</strong>
-      <% if (dream.author) { %>
-      <a href="/author/<%= dream.author %>">View Profile</a>
-      <% } else { %> Anonymous <% } %>
+        <strong>Author:</strong>
+        <% if (dream.author) { %>
+        <a href="/author/<%= dream.author %>">View Profile</a>
+        <% } else { %> Anonymous <% } %>
     </p>
+    <% } %>
+
+    <% if (user) { %>
     <form action="/favorites/add/<%= dream._id %>" method="POST">
-      <button type="submit">❤️ Add to Favorites</button>
+        <button type="submit">❤️ Add to Favorites</button>
     </form>
     <% } %>
-  </body>
+
+    <h2>Reactions:</h2>
+    <div id="reaction-buttons">
+        <% const userReaction = user ? dream.reactionUsers.get(user._id) : null; %>
+
+        <% const reactions = {
+            very_cool: "🔥 Very Cool",
+            pleasant: "😊 Pleasant",
+            funny: "😂 Funny",
+            mind_blown: "🤯 Mind Blown",
+            weird: "😳 Weird",
+            dislike: "👎 Dislike"
+        }; %>
+
+        <% for (const [key, label] of Object.entries(reactions)) { %>
+            <% if (user) { %>
+                <form action="/dream/reaction/<%= dream._id %>" method="POST">
+                    <input type="hidden" name="reaction" value="<%= key %>">
+                    <button type="submit" <% if (userReaction === key) { %> disabled <% } %> >
+                        <%= label %> (<%= dream.reactions[key] %>)
+                    </button>
+                </form>
+            <% } else { %>
+                <button disabled>
+                    <%= label %> (<%= dream.reactions[key] %>)
+                </button>
+            <% } %>
+        <% } %>
+    </div>
+
+    <% if (!user) { %>
+    <p><a href="/auth/login">Log in to add reactions</a></p>
+    <% } %>
+</body>
+
 </html>
