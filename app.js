@@ -20,7 +20,6 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/views"));
-app.use(express.static("public"));
 
 app.engine("ejs", require("ejs").renderFile);
 app.set("view engine", "ejs");
@@ -36,6 +35,22 @@ app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   next();
 });
+app.use(
+  "/views/css",
+  (req, res, next) => {
+    res.type("text/css");
+    next();
+  },
+  express.static(__dirname + "/views/css")
+);
+app.use(
+  "/views/js",
+  (req, res, next) => {
+    res.type("application/javascript");
+    next();
+  },
+  express.static(__dirname + "/views/js")
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
