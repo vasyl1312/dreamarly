@@ -6,7 +6,12 @@ router.get("/:category", async (req, res) => {
   try {
     const category = req.params.category;
     const dreams = await Dream.find({ categories: category }).populate("author");
-    res.render("genre", { category, dreams, user: req.user, alert: req.session.alert|| { type: "", message: "" } });
+    res.render("genres/genre", {
+      category,
+      dreams,
+      user: req.user,
+      alert: req.session.alert || { type: "", message: "" },
+    });
 
     req.session.alert = null;
   } catch (error) {

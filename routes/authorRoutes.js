@@ -13,7 +13,7 @@ router.get("/:id", async (req, res) => {
     const alert = req.session.alert || { type: "", message: "" };
     req.session.alert = null;
 
-    return res.render("author", { author, dreams, alert });
+    return res.render("authors/author", { author, dreams, alert });
   } catch (error) {
     console.error(error);
     return res.status(500).send("Internal Server Error");

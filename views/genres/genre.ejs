@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dreams in <%= category %></title>
     <link rel="stylesheet" href="/styles.css" />
-    <%- include("./partials/header") %>
+    <%- include("../partials/header") %>
   </head>
   <body>
     <h1>Dreams in "<%= category %>"</h1>
-    <%- include("./partials/messages") %> <% if (dreams.length === 0) { %>
+    <%- include("../partials/messages") %> <% if (dreams.length === 0) { %>
     <p>No dreams in this category yet.</p>
     <% } else { %>
     <ul>

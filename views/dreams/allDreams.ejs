@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Усі сни</title>
     <link rel="stylesheet" href="/styles.css" />
-    <%- include("./partials/header") %>
+    <%- include("../partials/header") %>
   </head>
   <body>
     <h1>List of dreams</h1>
-    <%- include("./partials/messages") %> <% if (dreams.length === 0) { %>
+    <%- include("../partials/messages") %> <% if (dreams.length === 0) { %>
     <p>There are no dreams yet</p>
     <% } else { %>
     <ul>

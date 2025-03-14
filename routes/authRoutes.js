@@ -6,7 +6,7 @@ const router = new Router();
 router.get("/register", (req, res) => {
   const alert = req.session.alert || { type: "", message: "" };
   req.session.alert = null;
-  res.render("register", { alert });
+  res.render("auth/register", { alert });
 });
 
 router.post("/register", async (req, res) => {
@@ -44,7 +44,7 @@ router.post("/register", async (req, res) => {
 router.get("/login", (req, res) => {
   const alert = req.session.alert || { type: "", message: "" };
   req.session.alert = null;
-  res.render("login", { alert, isLogin: true });
+  res.render("auth/login", { alert, isLogin: true });
 });
 
 router.post("/login", async (req, res) => {

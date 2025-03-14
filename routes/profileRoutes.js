@@ -9,7 +9,11 @@ router.get("/", isAuthenticated, async (req, res) => {
     const user = req.session.user;
     const dreams = await Dream.find({ author: user._id });
 
-    res.render("profile", { user, dreams, alert: req.session.alert || { type: "", message: "" } });
+    res.render("profile/profile", {
+      user,
+      dreams,
+      alert: req.session.alert || { type: "", message: "" },
+    });
 
     req.session.alert = null;
   } catch (error) {
@@ -77,7 +81,10 @@ router.get("/favorites", async (req, res) => {
     }
 
     const user = await User.findById(req.session.user._id).populate("favorites");
-    res.render("favorites", { favorites: user.favorites, alert: req.session.alert || {} });
+    res.render("profile/favorites", {
+      favorites: user.favorites,
+      alert: req.session.alert || { type: "", message: "" },
+    });
 
     req.session.alert = null;
   } catch (error) {

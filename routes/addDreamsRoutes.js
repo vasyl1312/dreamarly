@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
   try {
     const alert = req.session.alert || { type: "", message: "" };
     req.session.alert = null;
-    res.render("addNewDreams", { alert });
+    res.render("dreams/addNewDreams", { alert });
   } catch (error) {
     console.error(error);
     return res.status(500).send("Internal Server Error");
