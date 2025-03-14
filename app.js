@@ -4,6 +4,7 @@ const session = require("express-session");
 const mongoose = require("mongoose");
 const passport = require("passport");
 require("dotenv").config();
+const path = require("path");
 
 const homeRoutes = require("./routes/homeRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -20,7 +21,7 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.set("views", __dirname + "/views");
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.engine("ejs", require("ejs").renderFile);
 app.set("view engine", "ejs");
 
