@@ -10,7 +10,10 @@ router.get("/:id", async (req, res) => {
 
     const dreams = await Dream.find({ author: author._id }).sort({ date: -1 });
 
-    return res.render("author", { author, dreams });
+    const alert = req.session.alert || { type: "", message: "" };
+    req.session.alert = null;
+
+    return res.render("author", { author, dreams, alert });
   } catch (error) {
     console.error(error);
     return res.status(500).send("Internal Server Error");

@@ -1,28 +1,16 @@
 const { Router } = require("express");
-// const AboutUs = require("../models/aboutUs");
-// const Contacts = require("../models/contacts");
-// const Gallery = require("../models/gallery");
+
 const router = new Router();
 
 router.get("/", async (req, res) => {
   try {
-    // const contact = await Contacts.findOne();
-    // const aboutUs = await AboutUs.find();
-    // const gallery = await Gallery.find().sort({ date: -1 });
+    res.render("index", { alert: req.session.alert || { type: "", message: "" } });
 
-    // if (!contact) {
-    //   return res.status(404).send("Контакт не знайдено");
-    // }
-
-    // if (!aboutUs) {
-    //   return res.status(404).send("Інформацію в блоку про нас не знайдено");
-    // }
-
-    // res.render("index", { contact, aboutUs, gallery });
-    return res.render("index");
+    req.session.alert = null;
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Internal Server Error");
+    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    res.redirect("/");
   }
 });
 

@@ -7,10 +7,9 @@
     <%- include("header") %>
   </head>
   <body>
-    <h1>Edit Dream</h1>
-
-
 <h1>Edit Dream</h1>
+<%- include("./partials/messages") %>
+
     <form action="/profile/edit_dream/<%= dream._id %>" method="POST">
       <label for="title">Title:</label>
       <input type="text" id="title" name="title" value="<%= dream.title %>" required />

@@ -9,20 +9,25 @@ router.get("/", isAuthenticated, async (req, res) => {
     const user = req.session.user;
     const dreams = await Dream.find({ author: user._id });
 
-    res.render("profile", { user, dreams });
+    res.render("profile", { user, dreams, alert: req.session.alert || { type: "", message: "" } });
+
+    req.session.alert = null;
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Internal Server Error");
+    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    res.redirect("/");
   }
 });
 
 router.post("/delete/:id", isAuthenticated, async (req, res) => {
   try {
     await Dream.findOneAndDelete({ _id: req.params.id, author: req.session.user._id });
-    return res.redirect("/profile");
+    req.session.alert = { type: "success", message: "Dream deleted successfully." };
+    res.redirect("/profile");
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Internal Server Error");
+    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    res.redirect("/profile");
   }
 });
 
@@ -31,13 +36,16 @@ router.get("/edit_dream/:id", isAuthenticated, async (req, res) => {
     const dream = await Dream.findOne({ _id: req.params.id, author: req.session.user._id });
 
     if (!dream) {
+      req.session.alert = { type: "warning", message: "Dream not found." };
       return res.redirect("/profile");
     }
 
-    return res.render("editDream", { dream });
+    res.render("editDream", { dream, alert: req.session.alert || {} });
+    req.session.alert = null;
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Internal Server Error");
+    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    res.redirect("/profile");
   }
 });
 
@@ -52,24 +60,30 @@ router.post("/edit_dream/:id", isAuthenticated, async (req, res) => {
       }
     );
 
-    return res.redirect("/profile");
+    req.session.alert = { type: "success", message: "Dream updated successfully." };
+    res.redirect("/profile");
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Internal Server Error");
+    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    res.redirect("/profile");
   }
 });
 
 router.get("/favorites", async (req, res) => {
   try {
     if (!req.session.user) {
-      return res.redirect("/login");
+      req.session.alert = { type: "danger", message: "You must be logged in to view favorites." };
+      return res.redirect("/auth/login");
     }
 
     const user = await User.findById(req.session.user._id).populate("favorites");
-    res.render("favorites", { favorites: user.favorites });
+    res.render("favorites", { favorites: user.favorites, alert: req.session.alert || {} });
+
+    req.session.alert = null;
   } catch (error) {
     console.error(error);
-    res.status(500).send("Internal Server Error");
+    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    res.redirect("/");
   }
 });
 

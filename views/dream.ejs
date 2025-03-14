@@ -9,6 +9,8 @@
   </head>
   <body>
     <h1><%= dream.title %></h1>
+    <%- include("./partials/messages") %>
+
     <p><strong>Description:</strong> <%= dream.description %></p>
     <p><strong>Categories:</strong> 
         <% dream.categories.forEach(category => { %>

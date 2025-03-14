@@ -6,18 +6,25 @@ router.get("/:id", async (req, res) => {
   try {
     const dream = await Dream.findById(req.params.id);
     if (!dream) {
-      return res.status(404).send("The dream is not available");
+      req.session.alert = { type: "danger", message: "The dream is not available" };
+      return res.redirect("/all_dreams");
     }
-    return res.render("dream", { dream });
+
+    const alert = req.session.alert || { type: "", message: "" };
+    req.session.alert = null;
+
+    return res.render("dream", { dream, alert });
   } catch (error) {
     console.error(error);
-    return res.status(500).send(" Internal error: " + error.message);
+    req.session.alert = { type: "danger", message: "Internal error: " + error.message };
+    return res.redirect("/all_dreams");
   }
 });
 
 router.post("/reaction/:dreamId", async (req, res) => {
   if (!req.session.user) {
-    return res.redirect("/login");
+    req.session.alert = { type: "warning", message: "You need to log in to react!" };
+    return res.redirect("/auth/login");
   }
 
   const { dreamId } = req.params;
@@ -27,35 +34,37 @@ router.post("/reaction/:dreamId", async (req, res) => {
   try {
     const dream = await Dream.findById(dreamId);
     if (!dream) {
-      return res.status(404).send("Dream not found");
+      req.session.alert = { type: "danger", message: "Dream not found" };
+      return res.redirect("/all_dreams");
     }
 
     if (!dream.reactions.hasOwnProperty(reaction)) {
-      return res.status(400).send("Invalid reaction type");
+      req.session.alert = { type: "warning", message: "Invalid reaction type" };
+      return res.redirect(`/dream/${dreamId}`);
     }
 
-    // Перевіряємо, чи вже голосував користувач
     const previousReaction = dream.reactionUsers.get(userId);
 
     if (previousReaction) {
       if (previousReaction === reaction) {
-        return res.redirect(`/dream/${dreamId}`); // Якщо вибрана та ж сама реакція, просто оновлюємо сторінку
+        req.session.alert = { type: "info", message: "You have already reacted with this" };
+        return res.redirect(`/dream/${dreamId}`);
       } else {
-        // Видаляємо стару реакцію
         dream.reactions[previousReaction] -= 1;
       }
     }
 
-    // Оновлюємо реакцію
     dream.reactionUsers.set(userId, reaction);
     dream.reactions[reaction] += 1;
 
     await dream.save();
 
+    req.session.alert = { type: "success", message: "Your reaction was added!" };
     res.redirect(`/dream/${dreamId}`);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Server error");
+    req.session.alert = { type: "danger", message: "Server error" };
+    res.redirect("/all_dreams");
   }
 });
 

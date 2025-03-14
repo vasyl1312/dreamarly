@@ -8,9 +8,7 @@
   </head>
   <body>
     <h1>Register</h1>
-    <% if (alert.type) { %>
-    <div class="alert alert-<%= alert.type %>"><%= alert.message %></div>
-    <% } %>
+    <%- include("./partials/messages") %>
 
     <form action="/auth/register" method="POST">
       <label for="email">Email:</label>
