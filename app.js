@@ -46,12 +46,12 @@ app.use(
   express.static(__dirname + "/views/css")
 );
 app.use(
-  "/views/js",
+  "/views/scripts",
   (req, res, next) => {
     res.type("application/javascript");
     next();
   },
-  express.static(__dirname + "/views/js")
+  express.static(__dirname + "/views/scripts")
 );
 
 app.use(express.urlencoded({ extended: true }));

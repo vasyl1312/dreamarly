@@ -6,6 +6,32 @@
     <title>Add new dream</title>
     <link rel="stylesheet" href="/styles.css" />
     <%- include("../partials/header") %>
+    <script
+      src="https://cdn.tiny.cloud/1/jtypyuj9zafop37vzzdiq2j9tsyldw451muqsnsq3z5q129y/tinymce/7/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
+    <script type="text/javascript">
+      tinymce.init({
+        menubar: false,
+        statusbar: false,
+        toolbar: false,
+      });
+    </script>
+
+    <script>
+      tinymce.init({
+        selector: "textarea",
+        plugins:
+          "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
+        toolbar:
+          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+        setup: function (editor) {
+          editor.on("change", function () {
+            tinymce.triggerSave(); // Save the content of the editor to the textarea before form submission
+          });
+        },
+      });
+    </script>
   </head>
   <body>
     <h1>Add new dream</h1>

@@ -1,76 +1,80 @@
 <!DOCTYPE html>
 <html lang="uk">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= dream.title %></title>
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/css/dream.css">
     <%- include("../partials/header") %>
-  </head>
-  <body>
-    <h1><%= dream.title %></h1>
-    <%- include("../partials/messages") %>
+    <script src="https://cdn.tiny.cloud/1/jtypyuj9zafop37vzzdiq2j9tsyldw451muqsnsq3z5q129y/tinymce/6/tinymce.min.js"></script>
+    <script src="/scripts/dream.js"></script>
+</head>
+    <body>
+        <h1><%= dream.title %></h1>
+        <%- include("../partials/messages") %>
 
-    <p><strong>Description:</strong> <%= dream.description %></p>
-    <p><strong>Categories:</strong> 
-        <% dream.categories.forEach(category => { %>
-          <a href="/genres/<%= category %>"><%= category %></a><%= (dream.categories.indexOf(category) < dream.categories.length - 1) ? ', ' : '' %>
-        <% }) %>
-      </p>
-    <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
+        <textarea id="textarea"><%= dream.description %></textarea>
 
-    <% if (user && dream.author && dream.author.toString() === user._id.toString()) { %>
-    <p>
-        <strong>This is your dream.</strong>
-        <a href="/profile">View all your dreams on your profile</a>
-    </p>
-    <% } else { %>
-    <p>
-        <strong>Author:</strong>
-        <% if (dream.author) { %>
-        <a href="/author/<%= dream.author %>">View Profile</a>
-        <% } else { %> Anonymous <% } %>
-    </p>
-    <% } %>
+        <p><strong>Categories:</strong> 
+            <% dream.categories.forEach(category => { %>
+                <a href="/genres/<%= category %>"><%= category %></a><%= (dream.categories.indexOf(category) < dream.categories.length - 1) ? ', ' : '' %>
+            <% }) %>
+        </p>
+        <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
 
-    <% if (user) { %>
-    <form action="/favorites/add/<%= dream._id %>" method="POST">
-        <button type="submit">❤️ Add to Favorites</button>
-    </form>
-    <% } %>
+        <% if (user && dream.author && dream.author.toString() === user._id.toString()) { %>
+            <p>
+                <strong>This is your dream.</strong>
+                <a href="/profile">View all your dreams on your profile</a>
+            </p>
+        <% } else { %>
+            <p>
+                <strong>Author:</strong>
+                <% if (dream.author) { %>
+                    <a href="/author/<%= dream.author %>">View Profile</a>
+                <% } else { %> Anonymous <% } %>
+            </p>
+        <% } %>
 
-    <h2>Reactions:</h2>
-    <div id="reaction-buttons">
-        <% const userReaction = user ? dream.reactionUsers.get(user._id) : null; %>
+        <% if (user) { %>
+            <form action="/favorites/add/<%= dream._id %>" method="POST">
+                <button type="submit">❤️ Add to Favorites</button>
+            </form>
+        <% } %>
 
-        <% const reactions = {
-            very_cool: "🔥 Very Cool",
-            pleasant: "😊 Pleasant",
-            funny: "😂 Funny",
-            mind_blown: "🤯 Mind Blown",
-            weird: "😳 Weird",
-            dislike: "👎 Dislike"
-        }; %>
+        <h2>Reactions:</h2>
+        <div id="reaction-buttons">
+            <% const userReaction = user ? dream.reactionUsers.get(user._id) : null; %>
 
-        <% for (const [key, label] of Object.entries(reactions)) { %>
-            <% if (user) { %>
-                <form action="/dream/reaction/<%= dream._id %>" method="POST">
-                    <input type="hidden" name="reaction" value="<%= key %>">
-                    <button type="submit" <% if (userReaction === key) { %> disabled <% } %> >
+            <% const reactions = {
+                very_cool: "🔥 Very Cool",
+                pleasant: "😊 Pleasant",
+                funny: "😂 Funny",
+                mind_blown: "🤯 Mind Blown",
+                weird: "😳 Weird",
+                dislike: "👎 Dislike"
+            }; %>
+
+            <% for (const [key, label] of Object.entries(reactions)) { %>
+                <% if (user) { %>
+                    <form action="/dream/reaction/<%= dream._id %>" method="POST">
+                        <input type="hidden" name="reaction" value="<%= key %>">
+                        <button type="submit" <% if (userReaction === key) { %> disabled <% } %> >
+                            <%= label %> (<%= dream.reactions[key] %>)
+                        </button>
+                    </form>
+                <% } else { %>
+                    <button disabled>
                         <%= label %> (<%= dream.reactions[key] %>)
                     </button>
-                </form>
-            <% } else { %>
-                <button disabled>
-                    <%= label %> (<%= dream.reactions[key] %>)
-                </button>
+                <% } %>
             <% } %>
+        </div>
+
+        <% if (!user) { %>
+            <p><a href="/auth/login">Log in to add reactions</a></p>
         <% } %>
-    </div>
 
-    <% if (!user) { %>
-    <p><a href="/auth/login">Log in to add reactions</a></p>
-    <% } %>
-</body>
-
+    </body>
 </html>

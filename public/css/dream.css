@@ -1,0 +1,21 @@
+/* dark-mode.css */
+.dark-mode {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.dark-mode a {
+  color: #9dc3f8;
+}
+
+.toggle-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 8px 15px;
+  background: #444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
