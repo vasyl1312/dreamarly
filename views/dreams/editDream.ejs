@@ -5,10 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit dream</title>
     <%- include("../partials/header") %>
+    <script src="https://cdn.tiny.cloud/1/jtypyuj9zafop37vzzdiq2j9tsyldw451muqsnsq3z5q129y/tinymce/6/tinymce.min.js"></script>
+    <script>
+      tinymce.init({
+        selector: "textarea",
+        plugins:
+          "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount preview",
+        toolbar:
+          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | preview",
+        setup: function (editor) {
+          editor.on("change", function () {
+            tinymce.triggerSave(); // Save the content of the editor to the textarea before form submission
+          });
+        },
+      });
+    </script>
   </head>
   <body>
-<h1>Edit Dream</h1>
-<%- include("../partials/messages") %>
+    <h1>Edit Dream</h1>
+    <%- include("../partials/messages") %>
 
     <form action="/profile/edit_dream/<%= dream._id %>" method="POST">
       <label for="title">Title:</label>

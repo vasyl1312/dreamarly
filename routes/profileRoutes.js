@@ -44,7 +44,10 @@ router.get("/edit_dream/:id", isAuthenticated, async (req, res) => {
       return res.redirect("/profile");
     }
 
-    res.render("editDream", { dream, alert: req.session.alert || {} });
+    res.render("dreams/editDream", {
+      dream,
+      alert: req.session.alert || { type: "", message: "" },
+    });
     req.session.alert = null;
   } catch (error) {
     console.error(error);

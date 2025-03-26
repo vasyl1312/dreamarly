@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     menubar: false,
     statusbar: false,
     plugins: "fullscreen",
+    editable_root: false,
+
     toolbar: "fullscreen | darkmode",
     skin: "oxide-dark",
     content_css: "dark",
