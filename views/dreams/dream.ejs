@@ -9,13 +9,23 @@
     <%- include("../partials/header") %>
     <script src="https://cdn.tiny.cloud/1/jtypyuj9zafop37vzzdiq2j9tsyldw451muqsnsq3z5q129y/tinymce/6/tinymce.min.js"></script>
     <script src="/scripts/dream.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
 </head>
     <body>
         <h1><%= dream.title %></h1>
         <%- include("../partials/messages") %>
 
         <textarea id="textarea"><%= dream.description %></textarea>
+        <p style="background-color: burlywood;">
+            !!!! You can save the dream description as a PDF file. The text will retain its formatting, including fonts, colors, and alignment. 
+            However, images will be included, while videos or interactive elements will not be displayed in the PDF.
+        </p>
+        <button id="savePdfButton">📄 Save as PDF</button>
+        
 
+        <br/>
         <p><strong>Categories:</strong> 
             <% dream.categories.forEach(category => { %>
                 <a href="/genres/<%= category %>"><%= category %></a><%= (dream.categories.indexOf(category) < dream.categories.length - 1) ? ', ' : '' %>
