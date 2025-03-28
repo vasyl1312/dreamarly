@@ -85,5 +85,15 @@
             <p><a href="/auth/login">Log in to add reactions</a></p>
         <% } %>
 
+        <h4>Share:</h4>
+            <button id="copy-btn" class="btn btn-outline-dark" onclick="copyToClipboard()">📋 Copy URL for this dream</button>
+            <script>
+                function copyToClipboard() {
+                    const textToCopy = "<%= base_url %>/dream/<%= dream._id %>";
+                    navigator.clipboard.writeText(textToCopy)
+                        .catch(err => console.error("Error copying URL:", err));
+                }
+            </script>
+
     </body>
 </html>

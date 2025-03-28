@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Dream = require("../models/dreams");
+const base_url = process.env.BASE_URL_PORT;
 
 router.get("/:id", async (req, res) => {
   try {
@@ -13,7 +14,7 @@ router.get("/:id", async (req, res) => {
     const alert = req.session.alert || { type: "", message: "" };
     req.session.alert = null;
 
-    return res.render("dreams/dream", { dream, alert });
+    return res.render("dreams/dream", { dream, alert, base_url });
   } catch (error) {
     console.error(error);
     req.session.alert = { type: "danger", message: "Internal error: " + error.message };
