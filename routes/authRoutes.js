@@ -2,6 +2,7 @@ const { Router } = require("express");
 const bcrypt = require("bcryptjs");
 const User = require("../models/users");
 const router = new Router();
+const defaultAvatar = "/uploads/avatars/default.png";
 
 router.get("/register", (req, res) => {
   const alert = req.session.alert || { type: "", message: "" };
@@ -23,7 +24,13 @@ router.post("/register", async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, username, password: hashedPassword });
+    const newUser = new User({
+      email,
+      username,
+      password: hashedPassword,
+      avatar: defaultAvatar,
+      bio: "",
+    });
     await newUser.save();
 
     req.session.alert = {

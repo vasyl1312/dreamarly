@@ -2,15 +2,23 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/users");
 const Dream = require("../models/dreams");
+const multer = require("multer");
+const path = require("path");
 const { isAuthenticated } = require("../middleware/auth");
 
 router.get("/", isAuthenticated, async (req, res) => {
   try {
-    const user = req.session.user;
-    const dreams = await Dream.find({ author: user._id });
+    const userId = req.session.user?._id;
+
+    if (!userId) {
+      return res.redirect("/auth/login");
+    }
+
+    const userFromDb = await User.findById(userId);
+    const dreams = await Dream.find({ author: userId });
 
     res.render("profile/profile", {
-      user,
+      user: userFromDb,
       dreams,
       alert: req.session.alert || { type: "", message: "" },
     });
@@ -94,6 +102,37 @@ router.get("/favorites", async (req, res) => {
     console.error(error);
     req.session.alert = { type: "danger", message: "Internal Server Error." };
     res.redirect("/");
+  }
+});
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/uploads/avatars");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${req.session.user._id}-${Date.now()}${path.extname(file.originalname)}`);
+  },
+});
+
+const upload = multer({ storage });
+
+router.post("/edit", isAuthenticated, upload.single("avatar"), async (req, res) => {
+  try {
+    const { username, bio } = req.body;
+    const updates = { username, bio };
+
+    if (req.file) {
+      updates.avatar = `/uploads/avatars/${req.file.filename}`;
+    }
+
+    await User.findByIdAndUpdate(req.session.user._id, updates);
+
+    // req.session.alert = { type: "success", message: "Profile updated successfully." };
+    return res.redirect("/profile");
+  } catch (error) {
+    console.error(error);
+    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    return res.redirect("/profile");
   }
 });
 

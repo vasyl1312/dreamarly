@@ -12,6 +12,24 @@
 
     <p><strong>Email:</strong> <%= user.email %></p>
 
+    <h1>Edit Profile</h1>
+    <form action="/profile/edit" method="POST" enctype="multipart/form-data">
+      <label>Username:</label>
+      <input type="text" name="username" value="<%= user.username %>" required />
+
+      <label>Bio:</label>
+      <textarea name="bio"><%= user.bio || "" %></textarea>
+
+      <label>Profile Picture:</label>
+      <% if (user.avatar) { %>
+      <img src="<%= user.avatar %>" alt="Current Avatar" style="max-width: 100px" />
+      <% } %>
+      <input type="file" name="avatar" accept="image/*" />
+
+      <button type="submit">Save Changes</button>
+    </form>
+    <hr />
+
     <h2>Your Dreams</h2>
     <ul>
       <% if (dreams.length > 0) { %> <% dreams.forEach(dream => { %>

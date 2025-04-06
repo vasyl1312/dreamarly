@@ -10,8 +10,14 @@
     <h1>Author Profile</h1>
     <%- include("../partials/messages") %>
 
+    <img src="<%= author.avatar %>" alt="" />
+
     <p><strong>Username:</strong> <%= author.username %></p>
     <p><strong>Email:</strong> <%= author.email %></p>
+
+    <p><strong>Bio:</strong></p>
+    <p><%= author.bio %></p>
+    <hr />
 
     <h2>Dreams by <%= author.username %></h2>
     <ul>
