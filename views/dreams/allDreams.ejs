@@ -13,6 +13,19 @@
     <p>There are no dreams yet</p>
     <% } else { %>
     <ul>
+      <form id="sortForm" method="GET" action="/all_dreams">
+        <label for="sort">Sort by:</label>
+        <select name="sort" id="sort" onchange="this.form.submit()">
+          <option value="top" <%= sort === 'top' ? 'selected' : '' %>>Most Reactions 🔝</option>
+          <option value="latest" <%= sort === 'latest' ? 'selected' : '' %>>Latest 🆕</option>
+          <option value="very_cool" <%= sort === 'very_cool' ? 'selected' : '' %>>Very Cool 🔥</option>
+          <option value="pleasant" <%= sort === 'pleasant' ? 'selected' : '' %>>Pleasant 😊</option>
+          <option value="funny" <%= sort === 'funny' ? 'selected' : '' %>>Funny 😂</option>
+          <option value="mind_blown" <%= sort === 'mind_blown' ? 'selected' : '' %>>Mind Blown 🤯</option>
+          <option value="weird" <%= sort === 'weird' ? 'selected' : '' %>>Weird 😳</option>
+        </select>
+      </form>      
+      
       <% dreams.forEach(dream => { %>
       <li>
         <h2><a href="/dream/<%= dream._id %>"><%= dream.title %></a></h2>
