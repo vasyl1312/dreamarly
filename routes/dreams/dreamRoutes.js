@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Dream = require("../models/dreams");
+const Dream = require("../../models/dreams");
 const base_url = process.env.BASE_URL_PORT;
 
 router.get("/:id", async (req, res) => {

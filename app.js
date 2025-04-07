@@ -7,14 +7,14 @@ require("dotenv").config();
 const path = require("path");
 
 const homeRoutes = require("./routes/homeRoutes");
-const authRoutes = require("./routes/authRoutes");
-const dreamRoutes = require("./routes/dreamRoutes");
-const genresRoutes = require("./routes/genresRoutes");
-const authorRoutes = require("./routes/authorRoutes");
-const profileRoutes = require("./routes/profileRoutes");
-const favoriteRoutes = require("./routes/favoriteRoutes");
-const allDreamsRoutes = require("./routes/allDreamsRoutes");
-const addDreamsRoutes = require("./routes/addDreamsRoutes");
+const authRoutes = require("./routes/auth/authRoutes");
+const dreamRoutes = require("./routes/dreams/dreamRoutes");
+const genresRoutes = require("./routes/genre/genresRoutes");
+const authorRoutes = require("./routes/author/authorRoutes");
+const profileRoutes = require("./routes/profile/profileRoutes");
+const favoriteRoutes = require("./routes/profile/favoriteRoutes");
+const allDreamsRoutes = require("./routes/dreams/allDreamsRoutes");
+const addDreamsRoutes = require("./routes/dreams/addDreamsRoutes");
 
 const app = express();
 const port = process.env.PORT || 3000;

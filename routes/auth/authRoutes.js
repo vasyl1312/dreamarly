@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const bcrypt = require("bcryptjs");
-const User = require("../models/users");
+const User = require("../../models/users");
 const router = new Router();
 const defaultAvatar = "/uploads/avatars/default.png";
 

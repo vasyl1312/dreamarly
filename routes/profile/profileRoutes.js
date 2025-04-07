@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/users");
-const Dream = require("../models/dreams");
+const User = require("../../models/users");
+const Dream = require("../../models/dreams");
 const multer = require("multer");
 const path = require("path");
-const { isAuthenticated } = require("../middleware/auth");
+const { isAuthenticated } = require("../../middleware/auth");
 
 router.get("/", isAuthenticated, async (req, res) => {
   try {
