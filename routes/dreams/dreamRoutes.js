@@ -7,24 +7,21 @@ router.get("/:id", async (req, res) => {
   try {
     const dream = await Dream.findById(req.params.id);
     if (!dream) {
-      req.session.alert = { type: "danger", message: "The dream is not available" };
+      req.flash("error", "The dream is not available");
       return res.redirect("/all_dreams");
     }
-
-    const alert = req.session.alert || { type: "", message: "" };
-    req.session.alert = null;
 
     return res.render("dreams/dream", { dream, alert, base_url });
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal error: " + error.message };
+    req.flash("error", "Internal error: " + error.message);
     return res.redirect("/all_dreams");
   }
 });
 
 router.post("/reaction/:dreamId", async (req, res) => {
   if (!req.session.user) {
-    req.session.alert = { type: "warning", message: "You need to log in to react!" };
+    req.flash("warning", "You need to log in to react!");
     return res.redirect("/auth/login");
   }
 
@@ -35,12 +32,12 @@ router.post("/reaction/:dreamId", async (req, res) => {
   try {
     const dream = await Dream.findById(dreamId);
     if (!dream) {
-      req.session.alert = { type: "danger", message: "Dream not found" };
+      req.flash("error", "Dream not found");
       return res.redirect("/all_dreams");
     }
 
     if (!dream.reactions.hasOwnProperty(reaction)) {
-      req.session.alert = { type: "warning", message: "Invalid reaction type" };
+      req.flash("warning", "Invalid reaction type");
       return res.redirect(`/dream/${dreamId}`);
     }
 
@@ -48,7 +45,7 @@ router.post("/reaction/:dreamId", async (req, res) => {
 
     if (previousReaction) {
       if (previousReaction === reaction) {
-        req.session.alert = { type: "info", message: "You have already reacted with this" };
+        req.flash("info", "You have already reacted with this");
         return res.redirect(`/dream/${dreamId}`);
       } else {
         dream.reactions[previousReaction] -= 1;
@@ -60,11 +57,11 @@ router.post("/reaction/:dreamId", async (req, res) => {
 
     await dream.save();
 
-    req.session.alert = { type: "success", message: "Your reaction was added!" };
+    req.flash("success", "Your reaction was added!");
     res.redirect(`/dream/${dreamId}`);
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Server error" };
+    req.flash("error", "Server error");
     res.redirect("/all_dreams");
   }
 });

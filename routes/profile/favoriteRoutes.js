@@ -6,10 +6,7 @@ const Dream = require("../../models/dreams");
 router.get("/", async (req, res) => {
   try {
     if (!req.session.user) {
-      req.session.alert = {
-        type: "danger",
-        message: "You must be logged in to view favorites.",
-      };
+      req.flash("warning", "You must be logged in to view favorites.");
       return res.redirect("/auth/login");
     }
 
@@ -32,16 +29,10 @@ router.get("/", async (req, res) => {
     res.render("profile/favorites", {
       favorites,
       sort: sortOption,
-      alert: req.session.alert || { type: "", message: "" },
     });
-
-    req.session.alert = null;
   } catch (error) {
     console.error(error);
-    req.session.alert = {
-      type: "danger",
-      message: "Internal Server Error.",
-    };
+    req.flash("error", "Internal Server Error.");
     res.redirect("/");
   }
 });
@@ -49,7 +40,7 @@ router.get("/", async (req, res) => {
 router.post("/add/:dreamId", async (req, res) => {
   try {
     if (!req.session.user) {
-      req.session.alert = { type: "danger", message: "You must be logged in to add favorites." };
+      req.flash("warning", "You must be logged in to add favorites.");
       return res.redirect("/auth/login");
     }
 
@@ -57,28 +48,25 @@ router.post("/add/:dreamId", async (req, res) => {
     const dream = await Dream.findById(req.params.dreamId);
 
     if (!dream) {
-      req.session.alert = { type: "danger", message: "Dream not found." };
+      req.flash("error", "Dream not found.");
       return res.redirect("/all_dreams");
     }
 
     if (dream.author && dream.author.toString() === user._id.toString()) {
-      req.session.alert = {
-        type: "warning",
-        message: "You cannot add your own dream to favorites.",
-      };
+      req.flash("success", "You cannot add your own dream to favorites.");
       return res.redirect("/favorites");
     }
 
     if (!user.favorites.includes(dream._id)) {
       user.favorites.push(dream._id);
       await user.save();
-      req.session.alert = { type: "success", message: "Dream added to favorites!" };
+      req.flash("success", "Dream added to favorites!");
     }
 
     return res.redirect("/favorites");
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    req.flash("error", "Internal Server Error.");
     return res.redirect("/all_dreams");
   }
 });
@@ -86,7 +74,7 @@ router.post("/add/:dreamId", async (req, res) => {
 router.post("/remove/:dreamId", async (req, res) => {
   try {
     if (!req.session.user) {
-      req.session.alert = { type: "danger", message: "You must be logged in to remove favorites." };
+      req.flash("warning", "You must be logged in to remove favorites.");
       return res.redirect("/auth/login");
     }
 
@@ -94,11 +82,11 @@ router.post("/remove/:dreamId", async (req, res) => {
     user.favorites = user.favorites.filter((id) => id.toString() !== req.params.dreamId);
     await user.save();
 
-    req.session.alert = { type: "success", message: "Dream removed from favorites!" };
+    req.flash("success", "Dream removed from favorites!");
     res.redirect("/profile/favorites");
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    req.flash("danger", "Internal Server Error.");
     res.redirect("/profile/favorites");
   }
 });

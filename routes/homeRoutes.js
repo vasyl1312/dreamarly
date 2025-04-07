@@ -1,15 +1,12 @@
 const { Router } = require("express");
-
 const router = new Router();
 
 router.get("/", async (req, res) => {
   try {
-    res.render("index", { alert: req.session.alert || { type: "", message: "" } });
-
-    req.session.alert = null;
+    res.render("index");
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    req.flash("error", "Internal Server Error.");
     res.redirect("/");
   }
 });

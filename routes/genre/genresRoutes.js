@@ -17,7 +17,6 @@ router.get("/:category", async (req, res) => {
         .populate("author")
         .sort({ [sortKey]: -1, date: -1 });
     } else {
-      // Загальна кількість реакцій (без дизлайків)
       dreams = await Dream.aggregate([
         { $match: { categories: category } },
         {
@@ -36,23 +35,18 @@ router.get("/:category", async (req, res) => {
         { $sort: { reactionCount: -1, date: -1 } },
       ]);
 
-      // Після aggregate потрібен manual populate
-      const dreamsPopulated = await Dream.populate(dreams, { path: "author" });
-      dreams = dreamsPopulated;
+      dreams = await Dream.populate(dreams, { path: "author" });
     }
 
     res.render("genres/genre", {
       category,
       dreams,
       user: req.user,
-      alert: req.session.alert || { type: "", message: "" },
       sort: sortOption,
     });
-
-    req.session.alert = null;
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    req.flash("error", "Internal Server Error.");
     res.redirect("/");
   }
 });

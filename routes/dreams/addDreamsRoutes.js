@@ -5,9 +5,7 @@ const router = new Router();
 
 router.get("/", async (req, res) => {
   try {
-    const alert = req.session.alert || { type: "", message: "" };
-    req.session.alert = null;
-    res.render("dreams/addNewDreams", { alert });
+    res.render("dreams/addNewDreams");
   } catch (error) {
     console.error(error);
     return res.status(500).send("Internal Server Error");
@@ -26,11 +24,11 @@ router.post("/", async (req, res) => {
 
     await newDream.save();
 
-    req.session.alert = { type: "success", message: "Successfully added new dream!" };
+    req.flash("success", "Successfully added new dream!");
     res.redirect("/all_dreams");
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Something went wrong. Please try again." };
+    req.flash("error", "Something went wrong. Please try again.");
     res.redirect("/add_new_dreams");
   }
 });

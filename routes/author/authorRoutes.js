@@ -10,13 +10,11 @@ router.get("/:id", async (req, res) => {
 
     const dreams = await Dream.find({ author: author._id }).sort({ date: -1 });
 
-    const alert = req.session.alert || { type: "", message: "" };
-    req.session.alert = null;
-
-    return res.render("authors/author", { author, dreams, alert });
+    return res.render("authors/author", { author, dreams });
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Internal Server Error");
+    req.flash("error", "Internal Server Error.");
+    return res.redirect("/");
   }
 });
 

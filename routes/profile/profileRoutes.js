@@ -20,13 +20,10 @@ router.get("/", isAuthenticated, async (req, res) => {
     res.render("profile/profile", {
       user: userFromDb,
       dreams,
-      alert: req.session.alert || { type: "", message: "" },
     });
-
-    req.session.alert = null;
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    req.flash("error", "Internal Server Error.");
     res.redirect("/");
   }
 });
@@ -34,11 +31,11 @@ router.get("/", isAuthenticated, async (req, res) => {
 router.post("/delete/:id", isAuthenticated, async (req, res) => {
   try {
     await Dream.findOneAndDelete({ _id: req.params.id, author: req.session.user._id });
-    req.session.alert = { type: "success", message: "Dream deleted successfully." };
+    req.flash("success", "Dream deleted successfully.");
     res.redirect("/profile");
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    req.flash("error", "Internal Server Error.");
     res.redirect("/profile");
   }
 });
@@ -48,18 +45,16 @@ router.get("/edit_dream/:id", isAuthenticated, async (req, res) => {
     const dream = await Dream.findOne({ _id: req.params.id, author: req.session.user._id });
 
     if (!dream) {
-      req.session.alert = { type: "warning", message: "Dream not found." };
+      req.flash("warning", "Dream not found.");
       return res.redirect("/profile");
     }
 
     res.render("dreams/editDream", {
       dream,
-      alert: req.session.alert || { type: "", message: "" },
     });
-    req.session.alert = null;
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    req.flash("error", "Internal Server Error.");
     res.redirect("/profile");
   }
 });
@@ -75,11 +70,11 @@ router.post("/edit_dream/:id", isAuthenticated, async (req, res) => {
       }
     );
 
-    req.session.alert = { type: "success", message: "Dream updated successfully." };
+    req.flash("success", "Dream updated successfully.");
     res.redirect("/profile");
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    req.flash("error", "Internal Server Error.");
     res.redirect("/profile");
   }
 });
@@ -106,11 +101,11 @@ router.post("/edit", isAuthenticated, upload.single("avatar"), async (req, res) 
 
     await User.findByIdAndUpdate(req.session.user._id, updates);
 
-    // req.session.alert = { type: "success", message: "Profile updated successfully." };
+    req.flash("success", "Profile updated successfully.");
     return res.redirect("/profile");
   } catch (error) {
     console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
+    req.flash("error", "Internal Server Error.");
     return res.redirect("/profile");
   }
 });
