@@ -84,27 +84,6 @@ router.post("/edit_dream/:id", isAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/favorites", async (req, res) => {
-  try {
-    if (!req.session.user) {
-      req.session.alert = { type: "danger", message: "You must be logged in to view favorites." };
-      return res.redirect("/auth/login");
-    }
-
-    const user = await User.findById(req.session.user._id).populate("favorites");
-    res.render("profile/favorites", {
-      favorites: user.favorites,
-      alert: req.session.alert || { type: "", message: "" },
-    });
-
-    req.session.alert = null;
-  } catch (error) {
-    console.error(error);
-    req.session.alert = { type: "danger", message: "Internal Server Error." };
-    res.redirect("/");
-  }
-});
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/uploads/avatars");

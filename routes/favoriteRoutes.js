@@ -3,6 +3,49 @@ const router = express.Router();
 const User = require("../models/users");
 const Dream = require("../models/dreams");
 
+router.get("/", async (req, res) => {
+  try {
+    if (!req.session.user) {
+      req.session.alert = {
+        type: "danger",
+        message: "You must be logged in to view favorites.",
+      };
+      return res.redirect("/auth/login");
+    }
+
+    const sortOption = req.query.sort || "top";
+    const user = await User.findById(req.session.user._id).populate("favorites");
+
+    let favorites = user.favorites;
+
+    if (sortOption === "latest") {
+      favorites = favorites.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (["very_cool", "pleasant", "funny", "mind_blown", "weird"].includes(sortOption)) {
+      favorites = favorites.sort((a, b) => b.reactions[sortOption] - a.reactions[sortOption]);
+    } else {
+      favorites = favorites.sort((a, b) => {
+        const sumReactions = (r) => r.very_cool + r.pleasant + r.funny + r.mind_blown + r.weird;
+        return sumReactions(b.reactions) - sumReactions(a.reactions);
+      });
+    }
+
+    res.render("profile/favorites", {
+      favorites,
+      sort: sortOption,
+      alert: req.session.alert || { type: "", message: "" },
+    });
+
+    req.session.alert = null;
+  } catch (error) {
+    console.error(error);
+    req.session.alert = {
+      type: "danger",
+      message: "Internal Server Error.",
+    };
+    res.redirect("/");
+  }
+});
+
 router.post("/add/:dreamId", async (req, res) => {
   try {
     if (!req.session.user) {
@@ -23,7 +66,7 @@ router.post("/add/:dreamId", async (req, res) => {
         type: "warning",
         message: "You cannot add your own dream to favorites.",
       };
-      return res.redirect("/all_dreams");
+      return res.redirect("/favorites");
     }
 
     if (!user.favorites.includes(dream._id)) {
@@ -32,11 +75,11 @@ router.post("/add/:dreamId", async (req, res) => {
       req.session.alert = { type: "success", message: "Dream added to favorites!" };
     }
 
-    res.redirect("/all_dreams");
+    return res.redirect("/favorites");
   } catch (error) {
     console.error(error);
     req.session.alert = { type: "danger", message: "Internal Server Error." };
-    res.redirect("/all_dreams");
+    return res.redirect("/all_dreams");
   }
 });
 
