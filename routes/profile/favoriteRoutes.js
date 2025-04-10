@@ -17,6 +17,8 @@ router.get("/", async (req, res) => {
 
     if (sortOption === "latest") {
       favorites = favorites.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (sortOption === "most_viewed") {
+      favorites = favorites.sort((a, b) => (b.views || 0) - (a.views || 0));
     } else if (["very_cool", "pleasant", "funny", "mind_blown", "weird"].includes(sortOption)) {
       favorites = favorites.sort((a, b) => b.reactions[sortOption] - a.reactions[sortOption]);
     } else {

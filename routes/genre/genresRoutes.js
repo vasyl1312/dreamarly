@@ -11,6 +11,10 @@ router.get("/:category", async (req, res) => {
 
     if (sortOption === "latest") {
       dreams = await Dream.find({ categories: category }).populate("author").sort({ date: -1 });
+    } else if (sortOption === "most_viewed") {
+      dreams = await Dream.find({ categories: category })
+        .populate("author")
+        .sort({ views: -1, date: -1 });
     } else if (["very_cool", "pleasant", "funny", "mind_blown", "weird"].includes(sortOption)) {
       const sortKey = `reactions.${sortOption}`;
       dreams = await Dream.find({ categories: category })

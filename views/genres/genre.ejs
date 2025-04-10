@@ -16,6 +16,7 @@
       <form id="sortForm" method="GET" action="/genres/<%= category %>">
         <label for="sort">Sort by:</label>
         <select name="sort" id="sort" onchange="this.form.submit()">
+          <option value="most_viewed" <%= sort === 'most_viewed' ? 'selected' : '' %>>Most viewed 📖</option>
           <option value="top" <%= sort === 'top' ? 'selected' : '' %>>Most Reactions 🔝</option>
           <option value="latest" <%= sort === 'latest' ? 'selected' : '' %>>Latest 🆕</option>
           <option value="very_cool" <%= sort === 'very_cool' ? 'selected' : '' %>>Very Cool 🔥</option>
