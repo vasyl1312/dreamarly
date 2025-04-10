@@ -6,7 +6,7 @@ const Dream = require("../../models/dreams");
 router.get("/", async (req, res) => {
   try {
     if (!req.session.user) {
-      req.flash("warning", "You must be logged in to view favorites.");
+      req.flash("error", "You must be logged in to view favorites.");
       return res.redirect("/auth/login");
     }
 
@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
 router.post("/add/:dreamId", async (req, res) => {
   try {
     if (!req.session.user) {
-      req.flash("warning", "You must be logged in to add favorites.");
+      req.flash("error", "You must be logged in to add favorites.");
       return res.redirect("/auth/login");
     }
 
@@ -55,7 +55,7 @@ router.post("/add/:dreamId", async (req, res) => {
     }
 
     if (dream.author && dream.author.toString() === user._id.toString()) {
-      req.flash("success", "You cannot add your own dream to favorites.");
+      req.flash("error", "You cannot add your own dream to favorites.");
       return res.redirect("/favorites");
     }
 
@@ -76,7 +76,7 @@ router.post("/add/:dreamId", async (req, res) => {
 router.post("/remove/:dreamId", async (req, res) => {
   try {
     if (!req.session.user) {
-      req.flash("warning", "You must be logged in to remove favorites.");
+      req.flash("error", "You must be logged in to remove favorites.");
       return res.redirect("/auth/login");
     }
 

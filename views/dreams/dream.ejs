@@ -11,7 +11,6 @@
     <script src="/scripts/dream.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-
 </head>
     <body>
         <%- include("../partials/messages") %>
@@ -39,6 +38,10 @@
                 <strong>This is your dream.</strong>
                 <a href="/profile">View all your dreams on your profile</a>
             </p>
+        <% } else    if (user) { %>
+            <form action="/favorites/add/<%= dream._id %>" method="POST">
+                <button type="submit">❤️ Add to Favorites</button>
+            </form>
         <% } else { %>
             <p>
                 <strong>Author:</strong>
@@ -46,12 +49,6 @@
                     <a href="/author/<%= dream.author %>">View Profile</a>
                 <% } else { %> Anonymous <% } %>
             </p>
-        <% } %>
-
-        <% if (user) { %>
-            <form action="/favorites/add/<%= dream._id %>" method="POST">
-                <button type="submit">❤️ Add to Favorites</button>
-            </form>
         <% } %>
 
         <h2>Reactions:</h2>

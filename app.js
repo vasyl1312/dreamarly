@@ -64,8 +64,6 @@ app.locals.formatViews = function (num) {
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
-  res.locals.info = req.flash("info");
-  res.locals.warning = req.flash("warning");
   res.locals.error = req.flash("error");
   next();
 });
