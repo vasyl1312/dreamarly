@@ -29,6 +29,7 @@
       <% dreams.forEach(dream => { %>
       <li>
         <h2><a href="/dream/<%= dream._id %>"><%= dream.title %></a></h2>
+        <p><i class="fa fa-eye"></i> <%= formatViews(dream.views) %> views</p>
         <p>
           <strong>Categories:</strong>
           <% dream.categories.forEach(category => { %>

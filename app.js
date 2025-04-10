@@ -55,6 +55,13 @@ app.use(
   },
   express.static(__dirname + "/views/scripts")
 );
+// у головному app.js
+app.locals.formatViews = function (num) {
+  if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "m";
+  if (num >= 1_000) return (num / 1_000).toFixed(1) + "k";
+  return num.toString();
+};
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.info = req.flash("info");

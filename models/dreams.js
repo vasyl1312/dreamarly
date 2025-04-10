@@ -6,6 +6,7 @@ const dreamSchema = new Schema({
   categories: { type: Array, required: true },
   date: { type: Date, default: Date.now },
   author: { type: Schema.Types.ObjectId, ref: "User", default: null },
+  views: { type: Number, default: 0 },
 
   reactions: {
     very_cool: { type: Number, default: 0 },

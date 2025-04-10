@@ -5,13 +5,30 @@ const base_url = process.env.BASE_URL_PORT;
 
 router.get("/:id", async (req, res) => {
   try {
-    const dream = await Dream.findById(req.params.id);
+    const dreamId = req.params.id;
+    const dream = await Dream.findById(dreamId);
     if (!dream) {
       req.flash("error", "The dream is not available");
       return res.redirect("/all_dreams");
     }
 
-    return res.render("dreams/dream", { dream, alert, base_url });
+    const now = Date.now();
+    const viewCooldown = 5 * 60 * 1000; // 5 хвилин у мілісекундах
+
+    // Ініціалізація сесійного об’єкта, якщо ще немає
+    if (!req.session.dreamViews) {
+      req.session.dreamViews = {};
+    }
+
+    const lastViewTime = req.session.dreamViews[dreamId];
+
+    if (!lastViewTime || now - lastViewTime > viewCooldown) {
+      dream.views += 1;
+      await dream.save();
+      req.session.dreamViews[dreamId] = now;
+    }
+
+    return res.render("dreams/dream", { dream, base_url });
   } catch (error) {
     console.error(error);
     req.flash("error", "Internal error: " + error.message);

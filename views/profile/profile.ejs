@@ -35,6 +35,8 @@
       <% if (dreams.length > 0) { %> <% dreams.forEach(dream => { %>
       <li>
         <a href="/dream/<%= dream._id %>"><%= dream.title %></a>
+        <p><i class="fa fa-eye"></i> <%= formatViews(dream.views) %> views</p>
+
         <button>
           <a href="/profile/edit_dream/<%= dream._id %>">Edit</a>
         </button>

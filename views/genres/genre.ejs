@@ -29,6 +29,8 @@
       <% dreams.forEach(dream => { %>
       <li>
         <h2><a href="/dream/<%= dream._id %>"><%= dream.title %></a></h2>
+        <p><i class="fa fa-eye"></i> <%= formatViews(dream.views) %> views</p>
+
         <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
         <p>
           <strong>Reactions:</strong> 🔥 <%= dream.reactions.very_cool %> 😊 <%=

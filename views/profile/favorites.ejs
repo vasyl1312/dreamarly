@@ -27,6 +27,7 @@
     <% if (favorites.length > 0) { %> <% favorites.forEach(dream => { %>
     <div>
       <h2><a href="/dream/<%= dream._id %>"><%= dream.title %></a></h2>
+      <p><i class="fa fa-eye"></i> <%= formatViews(dream.views) %> views</p>
 
       <form action="/favorites/remove/<%= dream._id %>" method="POST">
         <button type="submit">Remove from Favorites</button>
