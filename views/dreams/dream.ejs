@@ -14,10 +14,10 @@
 
 </head>
     <body>
+        <%- include("../partials/messages") %>
         <h1><%= dream.title %></h1>
         <p><i class="fa fa-eye"></i> <%= formatViews(dream.views) %> views</p>
 
-        <%- include("../partials/messages") %>
 
         <textarea id="textarea"><%= dream.description %></textarea>
         <p style="background-color: burlywood;">

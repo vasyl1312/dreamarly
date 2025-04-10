@@ -85,11 +85,11 @@ router.post("/remove/:dreamId", async (req, res) => {
     await user.save();
 
     req.flash("success", "Dream removed from favorites!");
-    res.redirect("/profile/favorites");
+    res.redirect("/favorites");
   } catch (error) {
     console.error(error);
     req.flash("danger", "Internal Server Error.");
-    res.redirect("/profile/favorites");
+    res.redirect("/favorites");
   }
 });
 

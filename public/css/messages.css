@@ -4,11 +4,16 @@
   margin: 15px auto;
   width: 90%;
   max-width: 600px;
-  position: relative;
+  position: fixed;
   font-size: 16px;
   text-align: center;
+  z-index: 1000;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: opacity 0.4s ease;
+
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Success (зелений) */
