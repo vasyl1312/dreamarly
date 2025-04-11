@@ -56,5 +56,16 @@
       <p>You haven't posted any dreams yet.</p>
       <% } %>
     </ul>
+
+    <hr />
+    <h2>Delete Account</h2>
+    <p style="color: red">
+      Warning: This action is irreversible. Your dreams will stay, but without your name.
+    </p>
+    <form action="/profile/delete_account" method="POST">
+      <label for="confirmUsername">Type your username to confirm:</label>
+      <input type="text" name="confirmUsername" required />
+      <button type="submit" style="background-color: red; color: white">Delete My Account</button>
+    </form>
   </body>
 </html>

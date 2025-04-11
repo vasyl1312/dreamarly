@@ -3,6 +3,9 @@ const router = new Router();
 
 router.get("/", async (req, res) => {
   try {
+    if (req.query.accountDeleted) {
+      req.flash("success", "Account deleted successfully.");
+    }
     res.render("index");
   } catch (error) {
     console.error(error);

@@ -33,24 +33,28 @@
         </p>
         <p><strong>Date:</strong> <%= dream.date ? dream.date.toDateString() : "Unknown" %></p>
 
-        <% if (user && dream.author && dream.author.toString() === user._id.toString()) { %>
+        <% if (user && dream.author && dream.author._id.toString() === user._id.toString()) { %>
             <p>
-                <strong>This is your dream.</strong>
-                <a href="/profile">View all your dreams on your profile</a>
+              <strong>This is your dream.</strong>
+              <a href="/profile">View all your dreams on your profile</a>
             </p>
-        <% } else    if (user) { %>
+          <% } else if (user) { %>
             <form action="/favorites/add/<%= dream._id %>" method="POST">
-                <button type="submit">❤️ Add to Favorites</button>
+              <button type="submit">❤️ Add to Favorites</button>
             </form>
-        <% } else { %>
-            <p>
-                <strong>Author:</strong>
-                <% if (dream.author) { %>
-                    <a href="/author/<%= dream.author %>">View Profile</a>
-                <% } else { %> Anonymous <% } %>
-            </p>
-        <% } %>
-
+          <% } %>
+          
+          <p>
+            <strong>Author:</strong>
+            <% if (dream.author) { %>
+              <a href="/author/<%= dream.author._id %>">
+                <%= dream.author.username || "View Profile" %>
+              </a>
+            <% } else { %>
+              Anonymous
+            <% } %>
+          </p>
+          
         <h2>Reactions:</h2>
         <div id="reaction-buttons">
             <% const userReaction = user ? dream.reactionUsers.get(user._id) : null; %>

@@ -110,4 +110,36 @@ router.post("/edit", isAuthenticated, upload.single("avatar"), async (req, res) 
   }
 });
 
+router.post("/delete_account", isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.session.user._id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      req.flash("error", "User not found.");
+      return res.redirect("/profile");
+    }
+
+    if (req.body.confirmUsername !== user.username) {
+      req.flash("error", "Username does not match. Account not deleted.");
+      return res.redirect("/profile");
+    }
+
+    // Зробити сни анонімними (або видалити, залежно від політики)
+    await Dream.updateMany({ author: userId }, { $set: { author: null } });
+
+    // Видалити користувача
+    await User.findByIdAndDelete(userId);
+
+    // Вихід з акаунту (знищення сесії)
+    req.session.destroy(() => {
+      res.redirect("/?accountDeleted=true"); // можна через query повідомлення
+    });
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "Internal Server Error.");
+    res.redirect("/profile");
+  }
+});
+
 module.exports = router;

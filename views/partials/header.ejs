@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Header</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/header.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/css/header.css" />
   </head>
   <body>
     <nav>
@@ -27,8 +30,8 @@
         </li>
 
         <% if (user) { %>
-        <li><a href="/profile">Profile</a></li>
         <li><a href="/favorites">Favorites</a></li>
+        <li><a href="/profile">Profile</a></li>
         <li><a href="/auth/logout">Log Out</a></li>
         <% } else { %>
         <li><a href="/auth/login">Log In</a></li>
