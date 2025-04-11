@@ -128,12 +128,10 @@ router.post("/delete_account", isAuthenticated, async (req, res) => {
     // Зробити сни анонімними (або видалити, залежно від політики)
     await Dream.updateMany({ author: userId }, { $set: { author: null } });
 
-    // Видалити користувача
     await User.findByIdAndDelete(userId);
 
-    // Вихід з акаунту (знищення сесії)
     req.session.destroy(() => {
-      res.redirect("/?accountDeleted=true"); // можна через query повідомлення
+      res.redirect("/?accountDeleted=true");
     });
   } catch (error) {
     console.error(error);

@@ -12,6 +12,7 @@ const authRoutes = require("./routes/auth/authRoutes");
 const dreamRoutes = require("./routes/dreams/dreamRoutes");
 const genresRoutes = require("./routes/genre/genresRoutes");
 const authorRoutes = require("./routes/author/authorRoutes");
+const commentRoutes = require("./routes/dreams/commentRoutes");
 const profileRoutes = require("./routes/profile/profileRoutes");
 const favoriteRoutes = require("./routes/profile/favoriteRoutes");
 const allDreamsRoutes = require("./routes/dreams/allDreamsRoutes");
@@ -55,7 +56,6 @@ app.use(
   },
   express.static(__dirname + "/views/scripts")
 );
-// у головному app.js
 app.locals.formatViews = function (num) {
   if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "m";
   if (num >= 1_000) return (num / 1_000).toFixed(1) + "k";
@@ -78,6 +78,7 @@ app.use("/dream", dreamRoutes);
 app.use("/author", authorRoutes);
 app.use("/genres", genresRoutes);
 app.use("/profile", profileRoutes);
+app.use("/comments", commentRoutes);
 app.use("/favorites", favoriteRoutes);
 app.use("/all_dreams", allDreamsRoutes);
 app.use("/add_new_dreams", addDreamsRoutes);

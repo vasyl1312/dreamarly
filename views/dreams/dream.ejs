@@ -97,5 +97,45 @@
                         .catch(err => console.error("Error copying URL:", err));
                 }
             </script>
+
+    
+    <hr>
+    <h2>Comments</h2>
+
+    <% if (user) { %>
+    <form action="/comments/<%= dream._id %>" method="POST">
+        <input name="content" rows="4" cols="50" placeholder="Write your comment here..." required></input>
+        <br>
+        <button type="submit">Submit Comment</button>
+    </form>
+    <% } else { %>
+    <p><a href="/auth/login">Log in to comment</a></p>
+    <% } %>
+
+    <% if (comments && comments.length > 0) { %>
+    <ul>
+        <% comments.forEach(comment => { %>
+        <li style="margin-bottom: 10px;">
+            <strong><%= comment.author?.username || "Anonymous" %></strong>:
+            <p><%= comment.content %></p>
+            <small><%= comment.createdAt.toLocaleString() %></small>
+            
+            <% if (comment.replies && comment.replies.length > 0) { %>
+            <ul style="margin-left: 20px;">
+                <% comment.replies.forEach(reply => { %>
+                <li>
+                    <strong><%= reply.author?.username || "Anonymous" %></strong>:
+                    <p><%= reply.content %></p>
+                    <small><%= reply.createdAt.toLocaleString() %></small>
+                </li>
+                <% }) %>
+            </ul>
+            <% } %>
+        </li>
+        <% }) %>
+    </ul>
+    <% } else { %>
+    <p>No comments yet. Be the first to comment!</p>
+    <% } %>
     </body>
 </html>

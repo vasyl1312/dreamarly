@@ -1,21 +1,30 @@
 const express = require("express");
 const router = express.Router();
 const Dream = require("../../models/dreams");
+const Comment = require("../../models/comments");
 const base_url = process.env.BASE_URL_PORT;
 
 router.get("/:id", async (req, res) => {
   try {
     const dreamId = req.params.id;
-    const dream = await Dream.findById(dreamId);
+    const dream = await Dream.findById(dreamId).populate("author");
     if (!dream) {
       req.flash("error", "The dream is not available");
       return res.redirect("/all_dreams");
     }
 
-    const now = Date.now();
-    const viewCooldown = 5 * 60 * 1000; // 5 хвилин у мілісекундах
+    // Отримати коментарі до цього сну, включаючи авторів
+    const comments = await Comment.find({ dream: dreamId, parentComment: null })
+      .populate("author")
+      .populate({
+        path: "replies",
+        populate: { path: "author" },
+      })
+      .sort({ createdAt: -1 });
 
-    // Ініціалізація сесійного об’єкта, якщо ще немає
+    const now = Date.now();
+    const viewCooldown = 5 * 60 * 1000; // 5 хвилин
+
     if (!req.session.dreamViews) {
       req.session.dreamViews = {};
     }
@@ -28,7 +37,12 @@ router.get("/:id", async (req, res) => {
       req.session.dreamViews[dreamId] = now;
     }
 
-    return res.render("dreams/dream", { dream, base_url });
+    return res.render("dreams/dream", {
+      dream,
+      base_url,
+      comments,
+      user: req.session.user,
+    });
   } catch (error) {
     console.error(error);
     req.flash("error", "Internal error: " + error.message);
