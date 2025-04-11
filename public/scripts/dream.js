@@ -79,3 +79,30 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 });
+
+function toggleReplyForm(commentId) {
+  const form = document.getElementById(`reply-form-${commentId}`);
+  if (form.style.display === "none" || form.style.display === "") {
+    form.style.display = "block";
+  } else {
+    form.style.display = "none";
+  }
+}
+
+function toggleReplyForm(commentId) {
+  const form = document.getElementById(`reply-form-${commentId}`);
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleReplies(commentId) {
+  const replies = document.getElementById(`replies-${commentId}`);
+  const btn = document.querySelector(`button[onclick="toggleReplies('${commentId}')"]`);
+  
+  if (replies.style.display === 'none') {
+    replies.style.display = 'block';
+    btn.textContent = 'Hide replies';
+  } else {
+    replies.style.display = 'none';
+    btn.textContent = `Show ${replies.children.length} replies`;
+  }
+}

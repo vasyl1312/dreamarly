@@ -13,8 +13,7 @@ router.get("/:id", async (req, res) => {
       return res.redirect("/all_dreams");
     }
 
-    // Отримати коментарі до цього сну, включаючи авторів
-    const comments = await Comment.find({ dream: dreamId, parentComment: null })
+    const comments = await Comment.find({ dream: dream._id, parent: null })
       .populate("author")
       .populate({
         path: "replies",

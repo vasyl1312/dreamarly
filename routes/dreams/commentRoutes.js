@@ -29,4 +29,29 @@ router.post("/:dreamId", isAuthenticated, async (req, res) => {
   }
 });
 
+router.post("/:dreamId/reply/:commentId", isAuthenticated, async (req, res) => {
+  try {
+    const { content } = req.body;
+    const { dreamId, commentId } = req.params;
+
+    const reply = await Comment.create({
+      dream: dreamId,
+      author: req.session.user._id,
+      content,
+      parent: commentId,
+    });
+
+    await Comment.findByIdAndUpdate(commentId, {
+      $push: { replies: reply._id },
+    });
+
+    req.flash("success", "Reply added.");
+    res.redirect("/dream/" + dreamId);
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Failed to add reply.");
+    res.redirect("/dream/" + req.params.dreamId);
+  }
+});
+
 module.exports = router;

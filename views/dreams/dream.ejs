@@ -98,7 +98,6 @@
                 }
             </script>
 
-    
     <hr>
     <h2>Comments</h2>
 
@@ -112,30 +111,42 @@
     <p><a href="/auth/login">Log in to comment</a></p>
     <% } %>
 
+    <ul> 
     <% if (comments && comments.length > 0) { %>
-    <ul>
-        <% comments.forEach(comment => { %>
-        <li style="margin-bottom: 10px;">
-            <strong><%= comment.author?.username || "Anonymous" %></strong>:
-            <p><%= comment.content %></p>
-            <small><%= comment.createdAt.toLocaleString() %></small>
-            
-            <% if (comment.replies && comment.replies.length > 0) { %>
-            <ul style="margin-left: 20px;">
-                <% comment.replies.forEach(reply => { %>
-                <li>
-                    <strong><%= reply.author?.username || "Anonymous" %></strong>:
-                    <p><%= reply.content %></p>
-                    <small><%= reply.createdAt.toLocaleString() %></small>
+        <ul>
+            <% comments.forEach(comment => { %>
+                <li style="margin-bottom: 10px;">
+                  <strong><%= comment.author?.username || "Anonymous" %></strong>:
+                  <p><%= comment.content %></p>
+                  <small><%= comment.createdAt.toLocaleString() %></small>
+              
+                  <% if (user) { %>
+                    <button type="button" onclick="toggleReplyForm('<%= comment._id %>')">Reply</button>
+                    <form id="reply-form-<%= comment._id %>" action="/comments/<%= dream._id %>/reply/<%= comment._id %>" method="POST" style="display: none; margin-left: 20px;">
+                      <input name="content" placeholder="Write a reply..." required>
+                      <button type="submit">Send</button>
+                    </form>
+                  <% } %>
+              
+                  <% if (comment.replies && comment.replies.length > 0) { %>
+                    <button type="button" onclick="toggleReplies('<%= comment._id %>')" class="show-replies-btn">
+                      Show <%= comment.replies.length %> replies
+                    </button>
+                    <ul id="replies-<%= comment._id %>" style="margin-left: 20px; display: none;">
+                      <% comment.replies.forEach(reply => { %>
+                      <li>
+                        <strong><%= reply.author?.username || "Anonymous" %></strong>:
+                        <p><%= reply.content %></p>
+                        <small><%= reply.createdAt.toLocaleString() %></small>
+                      </li>
+                      <% }) %>
+                    </ul>
+                  <% } %>
                 </li>
-                <% }) %>
-            </ul>
-            <% } %>
-        </li>
-        <% }) %>
+              <% }) %>
+            <% } else { %>
+                <p>No comments yet. Be the first to comment!</p>
+            <% } %>      
     </ul>
-    <% } else { %>
-    <p>No comments yet. Be the first to comment!</p>
-    <% } %>
     </body>
 </html>
